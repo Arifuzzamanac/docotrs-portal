@@ -1,0 +1,17 @@
+[
+    {
+        "img": "https://i.ibb.co/GJQfZcv/cavity.png",
+        "title": "cavity fillings",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam est aliquid adipisci quam tempore esse!"
+    },
+    {
+        "img": "https://i.ibb.co/s9gW58v/fluoride.png",
+        "title": "Floride Testing",
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur temporibus ullam, laboriosam pariatur expedita nisi?"
+    },
+    {
+        "img": "https://i.ibb.co/89ntCpp/whitening.png",
+        "title": "Teath Whitening",
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur temporibus ullam, laboriosam pariatur expedita nisi?"
+    }
+]
