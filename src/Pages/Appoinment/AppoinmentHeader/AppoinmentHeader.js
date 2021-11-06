@@ -7,7 +7,7 @@ const AppoinmentHeader = ({ date, setDate }) => {
 
     return (
         <Container>
-            <Grid container spacing={2}>
+            <Grid sx={{ mt: 1 }} container spacing={2}>
                 <Grid xs={12} md={6}>
                     <Calander date={date} setDate={setDate}></Calander>
                 </Grid>
