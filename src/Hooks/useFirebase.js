@@ -1,14 +1,14 @@
+import { useEffect, useState } from "react";
 import initializeAuthentication from "../Pages/Login/Firebase/firebase.init";
-import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import { useState, useEffect } from "react";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 
 
-// initialize fire base authentiacation
-initializeAuthentication();
+// firebase authentication call
+initializeAuthentication()
 
 const useFirebase = () => {
-
     const [user, setUser] = useState({});
+
     const auth = getAuth();
 
     const registerUser = (email, password) => {
@@ -22,10 +22,24 @@ const useFirebase = () => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 // ..
-            });
+            })
     };
 
-    // observe user state 
+    const loginUser = (email, password) => {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
+
+    }
+
+    // user state update
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -33,11 +47,11 @@ const useFirebase = () => {
             } else {
                 setUser({})
             }
-        })
-        return () => unsubscribe
-    }, []);
+        });
+        return () => unsubscribe;
+    }, [])
 
-    const lgoOut = () => {
+    const logOut = () => {
         signOut(auth).then(() => {
             // Sign-out successful.
         }).catch((error) => {
@@ -45,12 +59,13 @@ const useFirebase = () => {
         });
     }
 
-
     return {
-        uesr,
+        user,
+        loginUser,
         registerUser,
         logOut,
     }
+
 }
 
 export default useFirebase;
