@@ -2,7 +2,6 @@ import { Button, Grid } from '@mui/material';
 import React from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-// import { fontWeight } from '@mui/system';
 import BookingModal from '../BookingModal/BookingModal';
 
 const Booking = ({ booking, date }) => {

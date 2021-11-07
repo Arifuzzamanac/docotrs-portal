@@ -1,10 +1,14 @@
-import { Button, Container, Grid, TextField, Typography } from '@mui/material';
+import { Button, Container, Grid, TextField, Typography, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import useAuth from '../../../context/Authprovider/useAuth';
 import login from '../../../images/login.png'
 
 const Register = () => {
     const [loginData, setLoginData] = useState();
+
+    const { registerUser, loading } = useAuth();
+
     const handleOnChange = e => {
         const name = e.target.name;
         const value = e.target.value;
@@ -17,9 +21,8 @@ const Register = () => {
             alert('Your password did not match')
             return
         }
+        registerUser(loginData.email, loginData.password)
         e.preventDefault();
-        // e.name = '';
-        // e.password = '';
     }
     return (
         <Container>
@@ -28,7 +31,7 @@ const Register = () => {
                     <Typography variant="body1" gutterBottom>
                         Register
                     </Typography>
-                    <form onSubmit={handleLoginSubmit}>
+                    {!loading && <form onSubmit={handleLoginSubmit}>
                         <TextField
                             sx={{ width: '75%', m: 1 }}
                             id="standard-basic"
@@ -57,7 +60,9 @@ const Register = () => {
                         <NavLink style={{ textDecoration: "none" }} to="login">
                             <Button variant="text">Already Registered ? Login</Button>
                         </NavLink>
-                    </form>
+                    </form>}
+                    {loading && <CircularProgress />
+                    }
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <img style={{ width: '100%' }} src={login} alt="" />
