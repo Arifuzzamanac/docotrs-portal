@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import initializeAuthentication from "../Pages/Login/Firebase/firebase.init";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile, signOut, onAuthStateChanged } from "firebase/auth";
 
 
 // firebase authentication call
@@ -12,12 +12,23 @@ const useFirebase = () => {
     const [authError, setAuthError] = useState('');
 
     const auth = getAuth();
+    const googleProvider = new GoogleAuthProvider();
 
-    const registerUser = (email, password) => {
+
+    const registerUser = (email, password, name, history) => {
         setLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 setAuthError('')
+                const newUser = { email, displayName: name }
+                setUser(newUser)
+                updateProfile(auth.currentUser, {
+                    displayName: name
+                  }).then(() => {
+                  }).catch((error) => {
+                  });
+                  
+                history.replace('/');
             })
             .catch((error) => {
                 setAuthError(error.message);
@@ -40,6 +51,18 @@ const useFirebase = () => {
 
     }
 
+    const signInWithGoogle = (location, history) => {
+        setLoading(true)
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                const user = result.user;
+                setAuthError('')
+            }).catch((error) => {
+                setAuthError(error.message);
+            })
+            .finally(() => setLoading(false));
+    }
+
     // user state update
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -60,7 +83,7 @@ const useFirebase = () => {
         }).catch((error) => {
             // An error happened.
         })
-        .finally(() => setLoading(false));
+            .finally(() => setLoading(false));
     }
 
     return {
@@ -69,6 +92,7 @@ const useFirebase = () => {
         authError,
         loginUser,
         registerUser,
+        signInWithGoogle,
         logOut,
     }
 
