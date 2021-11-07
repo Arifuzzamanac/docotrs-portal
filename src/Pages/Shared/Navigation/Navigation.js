@@ -10,7 +10,7 @@ import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../../context/Authprovider/useAuth';
 
 const Navigation = () => {
-    const { user, logout } = useAuth();
+    const { user, logOut } = useAuth();
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -33,7 +33,7 @@ const Navigation = () => {
                     </Link>
                     {
                         user?.email ?
-                            <Button onClick={logout} sx={{ color: 'white', fontWeight: 550, ml: 3 }} color="inherit">Logout</Button>
+                            <Button onClick={logOut} sx={{ color: 'white', fontWeight: 550, ml: 3 }} color="inherit">Logout</Button>
 
                             :
 

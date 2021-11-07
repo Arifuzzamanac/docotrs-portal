@@ -6,7 +6,8 @@ import bg from '../../../images/bg.png';
 import { Button, Container, Typography } from '@mui/material';
 
 const bannerBg = {
-    background: `url(${bg})`
+    background: `url(${bg})`,
+    marginTop: '50px'
 };
 
 const varticalPosition = {
