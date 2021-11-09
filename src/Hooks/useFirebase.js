@@ -22,12 +22,15 @@ const useFirebase = () => {
                 setAuthError('')
                 const newUser = { email, displayName: name }
                 setUser(newUser)
+                // save user to database
+                saveUser(email, name);
+                // send name to firebase after creation 
                 updateProfile(auth.currentUser, {
                     displayName: name
-                  }).then(() => {
-                  }).catch((error) => {
-                  });
-                  
+                }).then(() => {
+                }).catch((error) => {
+                });
+
                 history.replace('/');
             })
             .catch((error) => {
@@ -55,7 +58,8 @@ const useFirebase = () => {
         setLoading(true)
         signInWithPopup(auth, googleProvider)
             .then((result) => {
-                const user = result.user;
+                const user = result.user; const destination = location?.state?.from || '/';
+                history.replace(destination);
                 setAuthError('')
             }).catch((error) => {
                 setAuthError(error.message);
@@ -84,6 +88,10 @@ const useFirebase = () => {
             // An error happened.
         })
             .finally(() => setLoading(false));
+    };
+
+    const saveUser = (email, displayName) => {
+
     }
 
     return {
